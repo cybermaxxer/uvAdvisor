@@ -55,7 +55,7 @@ python main.py default hourly
 python main.py default
 python main.py
 ```
-You can change what default should mean in the code.
+You can change what default should mean in the main.py code, line 235
 
 This skips all prompts, defaults to medium skin type and "avoid" goal, and auto detects your city from your IP.
 
@@ -71,7 +71,7 @@ This skips all prompts, defaults to medium skin type and "avoid" goal, and auto 
 
 ## Files
 
-- `main.py` , entry point. Handles user input, request get requests for geocoding and weather, and the three modes.
+- `` , entry point. Handles user input, request get requests for geocoding and weather, and the three modes.
 - `helpers.py` , all the calculation and ranking logic, plus the UI helper that prints a skin color swatch in the terminal.
 - `InfoPoint.py` , a class wrapping a single hour's forecast data (time, UV, weather code, temperature) and deriving its time of day.
 - `skin_type.py` , a `SkinType` enum for the six Fitzpatrick skin types this tool supports.
@@ -84,8 +84,8 @@ Per CS50's policy, here's where and how AI was used in this project, and what ea
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
 | `helpers.py`, `color_block()`                                                                                                                                     | Claude         | gave it a spec: print an actual color block in the terminal for a given rgb tuple, using ansi escape codes                                                         | wrote the function whole                                                                |
 | `helpers.py`, `skin_multiplier`, `dangerous_uv` constants, and the formulas inside `get_exposure()`, `get_vitaminD_exposure()`, `get_circadian_rhythm_exposure()` | Gemini         | asked for real starting values and formulas for sun exposure time, since i'm not a dermatologist and didn't want to guess numbers                                  | gave me the constants and formula shapes used in those functions.                       |
-| `main.py`, `mode3()`                                                                                                                                              | GitHub Copilot | nothing explicit, it autocompleted while i was typing                                                                                                              | suggested most of the function based on the pattern from `mode2()`, which i wrote first |
-| `main.py`, requests/API calls throughout the file                                                                                                                 | Claude         | asked how to structure the requests calls (building query params into a url, calling `.json()` on the response, chaining the geocoding call into the weather call) | explained the pattern, which i then applied across the file                             |
+| ``, `mode3()`                                                                                                                                              | GitHub Copilot | nothing explicit, it autocompleted while i was typing                                                                                                              | suggested most of the function based on the pattern from `mode2()`, which i wrote first |
+| ``, requests/API calls throughout the file                                                                                                                 | Claude         | asked how to structure the requests calls (building query params into a url, calling `.json()` on the response, chaining the geocoding call into the weather call) | explained the pattern, which i then applied across the file                             |
 | `main.py`, skin type input parsing (the block that accepts either a name like "MEDIUM" or a number like "3")                                                      | Claude         | asked for a fix so the input accepts both the skin type name and its numeric value, since the printed menu shows both                                              | wrote that block                                                                        |
 | main.py the pdf generation layout                                                                                                                                 | Copilot        | autocompleted the tables after the circadian rhythm one                                                                                                            | autocompleted/i debugged and adjusted to size                                           |
 
