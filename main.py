@@ -1,5 +1,7 @@
 
+import json
 import sys
+from pathlib import Path
 from InfoPoint import InfoPoint
 from itertools import groupby
 import helpers
@@ -10,6 +12,29 @@ from fpdf.enums import XPos, YPos
 # AI use: Claude explained how to structure the requests calls used in this file
 # (building query params into the url, calling .json() on the response, the geocoding -> weather two step flow).
 from skin_type import SkinType as skin
+
+CONFIG_PATH = Path(__file__).with_name("config.json")
+DEFAULT_CONFIG = {
+    "default_skin_type": "MEDIUM",
+    "default_goal": "avoid",
+    "default_sub_mode": "hourly",
+}
+
+
+def load_config():
+    if not CONFIG_PATH.exists():
+        return DEFAULT_CONFIG.copy()
+
+    try:
+        with CONFIG_PATH.open("r", encoding="utf-8") as config_file:
+            loaded_config = json.load(config_file)
+    except (OSError, json.JSONDecodeError):
+        return DEFAULT_CONFIG.copy()
+
+    config = DEFAULT_CONFIG.copy()
+    if isinstance(loaded_config, dict):
+        config.update(loaded_config)
+    return config
 
 #ai use (claude) asked to create helpers to make the text colorful
 def red_text(text):
@@ -233,14 +258,29 @@ def create_pdf(date_input, rankedLists, city, skin_type, goal):
     pdf.output(filename)
 is_default_mode = len(sys.argv) > 1 and sys.argv[1].lower() == "default"
 #here you can change what default should actually mean, so that you run stuff much faster
+config = load_config()
+
 if is_default_mode:
-    user_skin_type = skin.MEDIUM
-    user_goal = "avoid"
+    default_skin_type = str(config.get("default_skin_type", "MEDIUM")).strip().upper()
+    if default_skin_type.isdigit():
+        try:
+            user_skin_type = skin(int(default_skin_type))
+        except ValueError:
+            user_skin_type = skin.MEDIUM
+    elif default_skin_type in skin.__members__:
+        user_skin_type = skin[default_skin_type]
+    else:
+        user_skin_type = skin.MEDIUM
+
+    user_goal = str(config.get("default_goal", "avoid")).strip().lower()
+    if user_goal not in {"avoid", "tan"}:
+        user_goal = "avoid"
+
     city, country = helpers.get_current_city()
-    sub_mode = sys.argv[2].lower() if len(sys.argv) > 2 else "hourly"
+    sub_mode = sys.argv[2].lower() if len(sys.argv) > 2 else str(config.get("default_sub_mode", "hourly")).lower()
     if sub_mode == "current":
         mode = 1
-    if sub_mode == "hourly":
+    else:
         mode = 2
 
 else:

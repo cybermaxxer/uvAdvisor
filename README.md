@@ -59,6 +59,18 @@ You can change what default should mean in the main.py code, line 235
 
 This skips all prompts, defaults to medium skin type and "avoid" goal, and auto detects your city from your IP.
 
+If you want to change the default values, edit [config.json](config.json). The script reads it automatically when it starts.
+
+Example:
+
+```json
+{
+	"default_skin_type": "MEDIUM",
+	"default_goal": "avoid",
+	"default_sub_mode": "hourly"
+}
+```
+
 ## Design choices
 
 **Why `InfoPoint` is a class and not a dict.** Every hour's weather data needs the same derived field: what part of the day it falls in (morning, afternoon, evening, night), which depends on parsing the hour out of the API's timestamp. Doing that parse once in `__init__` instead of recomputing "is this morning" inline every time it's needed keeps `helpers.py` from repeating the same hour math in five different places. One object, one source of truth per data point.
