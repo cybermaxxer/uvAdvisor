@@ -31,7 +31,7 @@ after the mode 2 and 3 you're asked if you want to save the output in the form o
 ```
 python3 -m venv uvAdvisor
 source uvAdvisor/bin/activate 
-pip install requests, fdf2
+pip install requests fpdf2
 python main.py 
 ```
 It'll walk you through picking a skin type (with an actual color swatch printed in the terminal so you can match it visually instead of guessing a Fitzpatrick number), your goal, your city, and your mode.
