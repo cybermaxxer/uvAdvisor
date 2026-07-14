@@ -232,7 +232,7 @@ def create_pdf(date_input, rankedLists, city, skin_type, goal):
     filename = f"uvAdvisor_{city.lower().replace(' ', '_')}_{safe_date}.pdf"
     pdf.output(filename)
 is_default_mode = len(sys.argv) > 1 and sys.argv[1].lower() == "default"
-
+#here you can change what default should actually mean, so that you run stuff much faster
 if is_default_mode:
     user_skin_type = skin.MEDIUM
     user_goal = "avoid"
