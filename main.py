@@ -277,7 +277,7 @@ result = response["results"]
 if len(result) > 1:
     print(f"found multiple cities named {city} please choose one of the following:")
     for i, match in enumerate(result):
-        print(f"{i + 1}. {match['name']}, {match['country']}, {match['admin1']}")
+        print(f"{i + 1}. {match.get('name', '')}, {match.get('country', '')}, {match.get('admin1', '')}")
     choice = int(input("Enter the number of your choice: "))
     result = result[choice - 1]
 else:

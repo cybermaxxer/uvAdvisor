@@ -1,14 +1,25 @@
 # uvAdvisor
-
+![uvAdvisor](uvadvisor_thumbnail.png)
 #### Video Demo:https://www.youtube.com/watch?v=UQMLDKvZx5I
 
 #### Description:
 
-Sun exposure advice is usually one size fits all: "wear sunscreen," "get morning light." It doesn't account for skin type, location, or what you're actually trying to do, build a tan without burning, or just get circadian daylight without tanning at all. uvAdvisor answers that question directly: given your skin type, your location, and your goal, how long can you safely be outside, right now or at any hour today. 
+Sun exposure advice is usually one size fits all: "wear sunscreen," "get morning light." It doesn't account for skin type, location, or what you're actually trying to do, build a tan without burning, or just get circadian daylight without tanning at all. uvAdvisor answers that question directly: given your skin type, your location, and your goal, how long can you safely be outside, right now or at any hour today.
 
 uvAdvisor is a command line tool written in Python. You give it your skin type, your goal, and your city, and it tells you exactly which hours of the day are safe, which are dangerous, and how long you can stay out in each window.
 
 I used Claude to help me hone this documentation, which resulted in smoother and more descriptive finalized document,
+
+### Table of Contents
+
+- [What it does](#what-it-does)
+- [How to run it](#how-to-run-it)
+- [Design choices](#design-choices)
+- [Files](#files)
+- [AI use documented](#ai-use-documented)
+- [Data and disclaimer](#data-and-disclaimer)
+- [Known limitations](#known-limitations)
+
 ## What it does
 
 You give it your skin type, your goal (tan or avoid tanning), and your city. It fetches live UV and weather data for your location from Open-Meteo and tells you, kfor any hour of the day:
@@ -21,11 +32,13 @@ You give it your skin type, your goal (tan or avoid tanning), and your city. It 
 It runs in three modes:
 
 | mode            | what it shows                             | when to use it                           |
-| --------------- | ----------------------------------------- | ---------------------------------------- |
+| --------------- | ------------------------------------------ | ----------------------------------------- |
 | 1, current      | min/max safe time right now               | quick check before you walk out the door |
 | 2, hourly       | full ranked breakdown of every hour today | planning your day                        |
 | 3, specific day | same as mode 2, for a date you choose     | planning ahead                           |
+
 after the mode 2 and 3 you're asked if you want to save the output in the form of a pdf file or not
+
 ## How to run it
 
 ```
@@ -43,6 +56,7 @@ python main.py default
 ```
 
 This skips all prompts, defaults to medium skin type and "avoid" goal, and auto detects your city from your IP.
+
 ## Design choices
 
 **Why `InfoPoint` is a class and not a dict.** Every hour's weather data needs the same derived field: what part of the day it falls in (morning, afternoon, evening, night), which depends on parsing the hour out of the API's timestamp. Doing that parse once in `__init__` instead of recomputing "is this morning" inline every time it's needed keeps `helpers.py` from repeating the same hour math in five different places. One object, one source of truth per data point.
@@ -75,7 +89,7 @@ Per CS50's policy, here's where and how AI was used in this project, and what ea
 
 ## Data and disclaimer
 
-UV index, weather code, and temperature all come from [Open-Meteo](https://open-meteo.com/) (CC BY 4.0), no API key required. The skin multiplier table is adapted from public consumer sun calculators, not a clinical source. 
+UV index, weather code, and temperature all come from [Open-Meteo](https://open-meteo.com/) (CC BY 4.0), no API key required. The skin multiplier table is adapted from public consumer sun calculators, not a clinical source.
 This is a wellness estimate, not medical advice: individual sensitivity varies, and no UV exposure is fully risk free.
 
 ## Known limitations
