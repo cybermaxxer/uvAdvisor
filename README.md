@@ -53,7 +53,9 @@ It'll walk you through picking a skin type (with an actual color swatch printed 
 python main.py default current
 python main.py default hourly
 python main.py default
+python main.py
 ```
+You can change what default should mean in the code.
 
 This skips all prompts, defaults to medium skin type and "avoid" goal, and auto detects your city from your IP.
 
