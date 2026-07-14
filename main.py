@@ -71,7 +71,7 @@ def mode2():
                     slot["max_time"] = "capped at 60 minutes, uv is going to increase after this hour"
         print(green_text(f"\nBest Outside Hours:"))
         for slot in rankedLists["outside"]:
-            print(green_text(f"{slot['hour']}:00 min time(in mins) outside: {slot['min_time']} - max time outside(in mins): {slot['max_time']} (UV: {slot['uv']})"))
+            print(green_text(f"{slot['hour']}:00 min time outside(in mins): {slot['min_time']} - max time outside(in mins): {slot['max_time']} (UV: {slot['uv']})"))
 
     if rankedLists["no_tanning"]:
         print(dim_text(f"\nNo Tanning Hours:"))
@@ -116,7 +116,7 @@ def mode3():
     
     print(green_text(f"\nBest Outside Hours:"))
     for slot in rankedLists["outside"]:
-        print(green_text(f"{slot['hour']}:00 min time(in mins) outside: {slot['min_time']} - max time outside(in mins): {slot['max_time']} (UV: {slot['uv']})"))
+        print(green_text(f"{slot['hour']}:00 min time outside(in mins): {slot['min_time']} - max time outside(in mins): {slot['max_time']} (UV: {slot['uv']})"))
     print(dim_text(f"\nNo Tanning Hours:"))
     for slot in rankedLists["no_tanning"]:
         print(dim_text(f"{slot['hour']}:00 (UV: {slot['uv']})"))
